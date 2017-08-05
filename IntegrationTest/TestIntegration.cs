@@ -7,52 +7,47 @@ namespace IntegrationTest
     [TestClass]
     public class TestIntegration
     {
+        private static int Steps = 1000;
+        private static double UpperBound = 10;
+        private static double Tolerance = 1e-4;
+
         [TestMethod]
         public void TestIntegration1()
         {
-            for(int i = 0; i < 10; i++)
+            Func<double, double>[] functions = new Func<double, double>[]
             {
-                Func<double, double>[] functions = new Func<double, double>[]
-                {
-                    n => n,
-                    n => Integration.Integrate(x => 1, new Integral1(() => 0, () => n, 1))
-                };
+                n => n,
+                n => Integration.Integrate(x => 1, new Integral1(() => 0, () => n, TestIntegration.Steps))
+            };
 
-                TestUtilities.TestFunctions(i, functions);
-            }
+            TestUtilities.TestFunctions(TestIntegration.UpperBound, TestIntegration.Tolerance, functions);
         }
 
         [TestMethod]
         public void TestIntegration2()
         {
-            for (int i = 0; i < 10; i++)
+            Func<double, double>[] functions = new Func<double, double>[]
             {
-                Func<double, double>[] functions = new Func<double, double>[]
-                {
-                    n => n * (n + 1) / 2,
-                    n => Integration.Integrate(x => x + 1, new Integral1(() => 0, () => n, 1)),
-                    n => Integration.Integrate((x, y) => 1, new Integral1(() => 0, () => n, 1), new Integral2(x => 0, x => x + 1, 1))
-                };
+                n => n * n / 2,
+                n => Integration.Integrate(x => x, new Integral1(() => 0, () => n, TestIntegration.Steps)),
+                n => Integration.Integrate((x, y) => 1, new Integral1(() => 0, () => n, TestIntegration.Steps), new Integral2(x => 0, x => x, TestIntegration.Steps))
+            };
 
-                TestUtilities.TestFunctions(i, functions);
-            }
+            TestUtilities.TestFunctions(TestIntegration.UpperBound, TestIntegration.Tolerance, functions);
         }
 
         [TestMethod]
         public void TestIntegration3()
         {
-            for (int i = 0; i < 10; i++)
+            Func<double, double>[] functions = new Func<double, double>[]
             {
-                Func<double, double>[] functions = new Func<double, double>[]
-                {
-                    n => n * (n + 1) * (n + 2) / 6,
-                    n => Integration.Integrate(x => (x + 1) * (x + 2) / 2, new Integral1(() => 0, () => n, 1)),
-                    n => Integration.Integrate((x, y) => y + 1, new Integral1(() => 0, () => n, 1), new Integral2(x => 0, x => x + 1, 1)),
-                    n => Integration.Integrate((x, y, z) => 1, new Integral1(() => 0, () => n, 1), new Integral2(x => 0, x => x + 1, 1), new Integral3((x, y) => 0, (x, y) => y + 1, 1))
-                };
+                n => n * n * n / 6,
+                n => Integration.Integrate(x => x * x / 2, new Integral1(() => 0, () => n, TestIntegration.Steps)),
+                n => Integration.Integrate((x, y) => y, new Integral1(() => 0, () => n, TestIntegration.Steps), new Integral2(x => 0, x => x, TestIntegration.Steps)),
+                n => Integration.Integrate((x, y, z) => 1, new Integral1(() => 0, () => n, TestIntegration.Steps), new Integral2(x => 0, x => x, TestIntegration.Steps), new Integral3((x, y) => 0, (x, y) => y, TestIntegration.Steps))
+            };
 
-                TestUtilities.TestFunctions(i, functions);
-            }
+            TestUtilities.TestFunctions(TestIntegration.UpperBound, TestIntegration.Tolerance, functions);
         }
     }
 }

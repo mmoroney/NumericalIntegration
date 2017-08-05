@@ -10,13 +10,13 @@ namespace NumericalIntegration
     {
         public Func<double, double, double> Lower { get; private set; }
         public Func<double, double, double> Upper { get; private set; }
-        public double Delta { get; private set; }
+        public int Steps { get; private set; }
 
-        public Integral3(Func<double, double, double> lower, Func<double, double, double> upper, double delta)
+        public Integral3(Func<double, double, double> lower, Func<double, double, double> upper, int steps)
         {
             this.Lower = lower;
             this.Upper = upper;
-            this.Delta = delta;
+            this.Steps = steps;
         }
     }
 }

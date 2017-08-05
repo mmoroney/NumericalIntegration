@@ -5,15 +5,20 @@ namespace IntegrationTest
 {
     public static class TestUtilities
     {
-        public static void TestFunctions<T, U>(T p1, params Func<T, U>[] functions)
+        public static void TestFunctions(double p1, double tolerance, params Func<double, double>[] functions)
         {
-            U[] results = new U[functions.Length];
+            double[] results = new double[functions.Length];
 
             for (int i = 0; i < results.Length; i++)
             {
                 results[i] = functions[i](p1);
-                Assert.AreEqual(results[0], results[i]);
+                Assert.IsTrue(TestUtilities.AreClose(results[0], results[i], tolerance));
             }
+        }
+
+        private static bool AreClose(double expected, double actual, double tolerance)
+        {
+            return Math.Abs(actual - expected) < tolerance;
         }
     }
 }

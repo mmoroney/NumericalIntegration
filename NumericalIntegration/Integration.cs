@@ -10,13 +10,14 @@ namespace NumericalIntegration
     {
         public static double Integrate(Func<double, double> f, Integral1 integral1)
         {
-            double result = 0;
-
             double lower = integral1.Lower();
             double upper = integral1.Upper();
+            double width = (upper - lower) / integral1.Steps;
 
-            for(double x = lower; x < upper; x += integral1.Delta)
-                result += f(x) * integral1.Delta;
+            double result = width * (f(lower) + f(upper)) / 2;
+
+            for (int i = 1; i < integral1.Steps; i++)
+                result += width * f(lower + (upper - lower) * i / integral1.Steps);
 
             return result;
         }
@@ -27,7 +28,7 @@ namespace NumericalIntegration
                 new Integral1(
                     () => integral2.Lower(x),
                     () => integral2.Upper(x),
-                    integral2.Delta)),
+                    integral2.Steps)),
                 integral1);
         }
 
@@ -38,7 +39,7 @@ namespace NumericalIntegration
                 new Integral1(
                     () => integral3.Lower(x, y),
                     () => integral3.Upper(x, y),
-                    integral3.Delta)),
+                    integral3.Steps)),
                 integral1, integral2);
         }
     }
