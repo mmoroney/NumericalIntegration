@@ -12,6 +12,9 @@ namespace NumericalIntegration
         {
             double lower = integral1.Lower();
             double upper = integral1.Upper();
+            if (lower == upper)
+                return 0;
+
             double width = (upper - lower) / integral1.Steps;
 
             double result = width * (f(lower) + f(upper)) / 2;
