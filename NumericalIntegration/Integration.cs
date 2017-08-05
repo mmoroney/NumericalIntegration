@@ -45,5 +45,20 @@ namespace NumericalIntegration
                     integral3.Steps)),
                 integral1, integral2);
         }
+
+        public static double Polar(Func<double, double, double> f, Integral1 integral1, Integral2 integral2)
+        {
+            return Integration.Integrate((r, theta) => r * f(r, theta), integral1, integral2);
+        }
+
+        public static double Cylindrical(Func<double, double, double, double> f, Integral1 integral1, Integral2 integral2, Integral3 integral3)
+        {
+            return Integration.Integrate((r, theta, z) => r * f(r, theta, z), integral1, integral2, integral3);
+        }
+
+        public static double Spherical(Func<double, double, double, double> f, Integral1 integral1, Integral2 integral2, Integral3 integral3)
+        {
+            return Integration.Integrate((r, theta, phi) => r * r * Math.Sin(theta) * f(r, theta, phi), integral1, integral2, integral3);
+        }
     }
 }

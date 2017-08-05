@@ -7,12 +7,10 @@ namespace IntegrationTest
     [TestClass]
     public class TestPolynomials
     {
-        private static int Steps = 1000;
-        private static double UpperBound = 10;
-        private static double Tolerance = 1e-4;
+        private static int Steps = 100;
 
         [TestMethod]
-        public void TestIntegration1()
+        public void TestPolynomial1()
         {
             Func<double, double>[] functions = new Func<double, double>[]
             {
@@ -20,11 +18,11 @@ namespace IntegrationTest
                 n => Integration.Integrate(x => 1, new Integral1(() => 0, () => n, TestPolynomials.Steps))
             };
 
-            TestUtilities.TestFunctions(TestPolynomials.UpperBound, TestPolynomials.Tolerance, functions);
+            TestUtilities.TestFunctions(100, 1e-5, functions);
         }
 
         [TestMethod]
-        public void TestIntegration2()
+        public void TestPolynomial2()
         {
             Func<double, double>[] functions = new Func<double, double>[]
             {
@@ -33,11 +31,11 @@ namespace IntegrationTest
                 n => Integration.Integrate((x, y) => 1, new Integral1(() => 0, () => n, TestPolynomials.Steps), new Integral2(x => 0, x => x, TestPolynomials.Steps))
             };
 
-            TestUtilities.TestFunctions(TestPolynomials.UpperBound, TestPolynomials.Tolerance, functions);
+            TestUtilities.TestFunctions(10, 1e-4, functions);
         }
 
         [TestMethod]
-        public void TestIntegration3()
+        public void TestPolynomial3()
         {
             Func<double, double>[] functions = new Func<double, double>[]
             {
@@ -47,7 +45,7 @@ namespace IntegrationTest
                 n => Integration.Integrate((x, y, z) => 1, new Integral1(() => 0, () => n, TestPolynomials.Steps), new Integral2(x => 0, x => x, TestPolynomials.Steps), new Integral3((x, y) => 0, (x, y) => y, TestPolynomials.Steps))
             };
 
-            TestUtilities.TestFunctions(TestPolynomials.UpperBound, TestPolynomials.Tolerance, functions);
+            TestUtilities.TestFunctions(1, 1e-3, functions);
         }
     }
 }
