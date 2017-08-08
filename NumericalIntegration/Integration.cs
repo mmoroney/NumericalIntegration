@@ -22,6 +22,7 @@ namespace NumericalIntegration
             for (int i = 1; i < integral1.Steps; i++)
                 result += width * f(lower + (upper - lower) * i / integral1.Steps);
 
+
             return result;
         }
 

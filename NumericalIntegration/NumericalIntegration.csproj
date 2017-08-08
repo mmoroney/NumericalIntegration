@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area.cs" />
+    <Compile Include="Circle.cs" />
     <Compile Include="Integral1.cs" />
     <Compile Include="Integral2.cs" />
     <Compile Include="Integral3.cs" />
