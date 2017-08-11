@@ -17,7 +17,7 @@ namespace IntegrationTest
             {
                 R => Math.PI * R * 2,
                 R => new Circle(R).IntegratePerimeterPolar((r, theta) => 1, steps),
-                R => new Circle(R).IntegratePerimeterPolar((x, y) => 1, steps)
+                R => new Circle(R).IntegratePerimeterCartesian((x, y) => 1, steps)
             };
 
             TestUtilities.TestFunctions(1, tolerance, functions);
