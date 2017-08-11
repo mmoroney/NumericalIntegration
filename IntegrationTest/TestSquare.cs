@@ -5,35 +5,26 @@ using NumericalIntegration;
 namespace IntegrationTest
 {
     [TestClass]
-    public class TestArea
+    public class TestSquare
     {
         [TestMethod]
-        public void TestCircle()
+        public void TestSquareIntegratePerimeter()
         {
             int steps = 1000;
             double tolerance = 1e-5;
 
             Func<double, double>[] functions = new Func<double, double>[]
             {
-                R => Math.PI * R * R,
-                R => new Circle(R).IntegrateAreaPolar((x, y) => 1, steps),
-                R => new Circle(R).IntegrateAreaCartesian((x, y) => 1, steps)
-            };
-
-            TestUtilities.TestFunctions(10, tolerance, functions);
-
-            functions = new Func<double, double>[]
-            {
-                R => Math.PI * R * R * R * 2 / 3,
-                R => new Circle(R).IntegrateAreaPolar((r, theta) => r, steps),
-                R => new Circle(R).IntegrateAreaCartesian((x, y) => Math.Sqrt(x * x + y * y), steps)
+                S => S * 4,
+                S => new Square(S).IntegratePerimeterCartesian((x, y) => 1, steps),
+                S => new Square(S).IntegratePerimeterPolar((r, theta) => 1, steps)
             };
 
             TestUtilities.TestFunctions(1, tolerance, functions);
         }
 
         [TestMethod]
-        public void TestSquare()
+        public void TestSquareIntegrateArea()
         {
             int steps = 1000;
             double tolerance = 1e-5;

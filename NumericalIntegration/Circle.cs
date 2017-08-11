@@ -14,6 +14,16 @@ namespace NumericalIntegration
             this.Radius = radius;
         }
 
+        public override double IntegratePerimeterCartesian(Func<double, double, double> f, int steps)
+        {
+            return this.IntegratePerimeterPolar((r, theta) => f(r * Math.Cos(theta), r * Math.Sin(theta)), steps);
+        }
+
+        public override double IntegratePerimeterPolar(Func<double, double, double> f, int steps)
+        {
+            return Integration.Integrate(theta => f(this.Radius, theta), new Integral1(() => 0, () => Math.PI * 2, steps));
+        }
+
         public override double IntegrateAreaCartesian(Func<double, double, double> f, int steps)
         {
             return this.IntegrateAreaPolar((r, theta) => f(r * Math.Cos(theta), r * Math.Sin(theta)), steps);
@@ -21,7 +31,7 @@ namespace NumericalIntegration
 
         public override double IntegrateAreaPolar(Func<double, double, double> f, int steps)
         {
-            return Integration.Integrate((r, theta) => r * f(r, theta), new Integral1(() => 0, () => this.Radius, steps),
+            return Integration.Polar(f, new Integral1(() => 0, () => this.Radius, steps),
                 new Integral2(r => 0, r => Math.PI * 2, steps));
         }
     }
